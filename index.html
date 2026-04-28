@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --ni-bg-light: #F8FAFC;
+    --ni-surface-light: #FFFFFF;
+    --ni-text-light: #0F172A;
+    --ni-text-muted-light: #475569;
+    --ni-border-light: #E2E8F0;
+
+    --ni-bg-dark: #0B0F19;
+    --ni-surface-dark: #111827;
+    --ni-surface-elevated: #1F2937;
+    --ni-text-dark: #F8FAFC;
+    --ni-text-muted-dark: #94A3B8;
+    --ni-border-dark: #334155;
+
+    --ni-orange: #FF4F00;
+    --ni-orange-dark: #E04600;
+    --ni-blue: #0284C7;
+    --ni-critical: #EF4444;
+    --ni-high: #F59E0B;
+    --ni-stable: #10B981;
+}
+
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--ni-bg-light);
+    color: var(--ni-text-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+.font-mono, code, .ni-mono {
+    font-family: 'Space Mono', monospace;
+}
+
+.ni-label {
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.7rem;
+}
+
+/* Theme: dashboard dark */
+.ni-dark {
+    background: var(--ni-bg-dark);
+    color: var(--ni-text-dark);
+    min-height: 100vh;
+}
+.ni-dark .ni-card {
+    background: var(--ni-surface-dark);
+    border: 1px solid var(--ni-border-dark);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.ni-dark .ni-card:hover {
+    border-color: var(--ni-orange);
+}
+.ni-dark .ni-card-elevated {
+    background: var(--ni-surface-elevated);
+    border: 1px solid var(--ni-border-dark);
+}
+
+.ni-grain {
+    background-image:
+        radial-gradient(rgba(255,79,0,0.04) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 24px 24px, 8px 8px;
+    background-position: 0 0, 4px 4px;
+}
+
+.ni-topo {
+    background-image: url('https://static.prod-images.emergentagent.com/jobs/3ee99986-8bba-417a-87e2-7c1a9581d902/images/baf63ddfc0099946a424ba2a134317f36664cb0959c2a2324382249495ac7988.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.ni-btn-primary {
+    background: var(--ni-orange);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ni-orange);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+.ni-btn-primary:hover {
+    background: var(--ni-orange-dark);
+    transform: translateY(-1px);
+}
+.ni-btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,79,0,0.3);
+}
+
+.ni-btn-ghost {
+    background: transparent;
+    color: var(--ni-text-light);
+    border: 1px solid var(--ni-border-light);
+    padding: 0.65rem 1.4rem;
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+.ni-dark .ni-btn-ghost {
+    color: var(--ni-text-dark);
+    border-color: var(--ni-border-dark);
+}
+.ni-btn-ghost:hover {
+    border-color: var(--ni-orange);
+    color: var(--ni-orange);
+}
+
+.ni-input {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--ni-border-light);
+    padding: 0.7rem 0.9rem;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ni-text-light);
+    transition: border-color 0.2s ease;
+}
+.ni-input:focus {
+    outline: none;
+    border-color: var(--ni-orange);
+    box-shadow: 0 0 0 3px rgba(255,79,0,0.15);
+}
+.ni-dark .ni-input {
+    background: var(--ni-surface-elevated);
+    color: var(--ni-text-dark);
+    border-color: var(--ni-border-dark);
+}
+
+.ni-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ni-border-dark), transparent);
+}
+
+.ni-pulse-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ni-stable);
+    box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
+    animation: ni-pulse 2s infinite;
+}
+@keyframes ni-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); }
+    70% { box-shadow: 0 0 0 12px rgba(16,185,129,0); }
+    100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+/* Leaflet map dark theme */
+.ni-map-dark .leaflet-container {
+    background: #0B0F19;
+}
+.ni-map-dark .leaflet-tile {
+    filter: brightness(0.6) invert(1) contrast(1.1) hue-rotate(180deg) saturate(0.6) brightness(0.9);
+}
+
+.ni-priority-marker {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4), 0 0 14px rgba(255,79,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: #fff;
+}
+
+@layer base {
+    :root {
+        --background: 210 40% 98%;
+        --foreground: 222 47% 11%;
+        --card: 0 0% 100%;
+        --card-foreground: 222 47% 11%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222 47% 11%;
+        --primary: 16 100% 50%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 222 47% 11%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 215 20% 35%;
+        --accent: 16 100% 50%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 214 32% 91%;
+        --input: 214 32% 91%;
+        --ring: 16 100% 50%;
+        --radius: 0.25rem;
+    }
+    .dark {
+        --background: 222 47% 8%;
+        --foreground: 210 40% 98%;
+        --card: 222 47% 11%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222 47% 11%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 16 100% 50%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 217 33% 17%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217 33% 17%;
+        --muted-foreground: 215 20% 65%;
+        --accent: 16 100% 50%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 217 33% 22%;
+        --input: 217 33% 17%;
+        --ring: 16 100% 50%;
+    }
+}
+
+@layer base {
+    * { @apply border-border; }
+}
